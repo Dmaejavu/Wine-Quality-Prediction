@@ -58,6 +58,16 @@ if predict_button or use_example:
     probabilities = model.predict_proba(input_array)[0]
     confidence = round(100 * max(probabilities), 2)
 
+if predict_button or use_example:
+    prediction = model.predict(input_array)[0]
+    probabilities = model.predict_proba(input_array)[0]
+    confidence = round(100 * max(probabilities), 2)
+
     st.subheader("🔍 Prediction Result")
-    st.success("✅ Good Quality Wine") if prediction == 1 else st.warning("❌ Not Good Quality Wine")
+
+    if prediction == 1:
+        st.success("✅ Good Quality Wine")
+    else:
+        st.warning("❌ Not Good Quality Wine")
+
     st.write(f"**Confidence Score:** {confidence}%")

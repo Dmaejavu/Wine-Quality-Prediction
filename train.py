@@ -5,6 +5,8 @@ import joblib
 import xgboost as xgb
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
+
 
 # Load dataset
 df = pd.read_csv('winequality-red-selected-missing.csv')
@@ -28,6 +30,10 @@ print(f"scale_pos_weight: {scale_pos_weight:.2f}")
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
+
+# Apply SMOTE to balance the training set
+smote = SMOTE(random_state=42)
+X_train, y_train = smote.fit_resample(X_train, y_train)
 
 # Initialize and train XGBoost model
 xgb_model = xgb.XGBClassifier(
